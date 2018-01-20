@@ -1,0 +1,9 @@
+{
+  "name": "John Smith",
+  "address": {
+    "line1": "610, 11th Ave",
+    "line2": "USA",
+    "line3": "New York, NY, 10036"
+  },
+  "rate_per_hour": 99.99
+}

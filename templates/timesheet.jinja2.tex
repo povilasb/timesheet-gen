@@ -1,0 +1,76 @@
+\documentclass[11pt,a4paper]{article}
+\title{Monthly Timesheet}
+
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{multicol}
+\usepackage{tabu}
+\usepackage{longtable}
+
+\definecolor{blue}{RGB}{61,133,198}
+\definecolor{grey}{RGB}{96,96,96}
+
+\begin{document}
+
+\begin{minipage}{0.5\textwidth}
+\textbf{\textcolor{blue}{\LARGE{
+    Monthly Timesheet
+}}}
+\end{minipage}
+\begin{minipage}{0.25\textwidth}
+\begin{flushright}
+\includegraphics[height=50px]{images/logo.png}
+\end{flushright}
+\end{minipage}
+
+\textbf{\textcolor{grey}{\large{
+    {{ name }} \\
+}}}
+
+\begin{minipage}{0.20\textwidth}
+    Street Address: \\
+    Address 2: \\
+    City, State ZIP:
+\end{minipage}
+\begin{minipage}{0.25\textwidth}
+    \underline{ {{ address.line1 }} } \\
+    \underline{ {{ address.line2 }} } \\
+    \underline{ {{ address.line3 }} }
+\end{minipage}
+\begin{minipage}{0.25\textwidth}
+    Pay Period Start Date: \\
+    Pay Period End Date:
+\end{minipage}
+\begin{minipage}{0.25\textwidth}
+    \underline{ {{ start_date }} } \\
+    \underline{ {{ end_date }} }
+\end{minipage}
+
+\begin{longtabu}{ c c | p{9cm} | c | r  }
+    \cline{1-4}
+    \multicolumn{1}{|c|}{\textbf{Week}} & \textbf{Date} & \textbf{Description} & \textbf{Total} \\ \cline{1-4}
+    {% for nr in weeks %}
+        {% for day in weeks[nr].days %}
+            \multicolumn{1}{|c|}{ {{ nr }} } & {{ weeks[nr].days[day].date }} & {{ weeks[nr].days[day].description }} & {{ "%.2f"|format(weeks[nr].days[day].hours) }}
+            {% if weeks[nr].days[day]['last_in_workweek'] %}
+                \\ \hline
+                \multicolumn{1}{|c|}{ } & & & & \multicolumn{1}{|c|}{\textbf{ {{ "%.2f"|format(weeks[nr].total_hours) }} } } \\ \hline
+            {% else %}
+                \\ \cline{1-4}
+            {% endif %}
+        {% endfor %}
+    \hline
+    {% endfor %}
+        & & \multicolumn{1}{|r|}{Total Hours} & {{ "%.2f"|format(total_hours) }} & \textbf{ {{ "%.2f"|format(total_hours) }} } \\ \cline{3-4}
+    & & \multicolumn{1}{|r|}{Rate Per Hour} & \pounds {{ rate_per_hour }} \\ \cline{3-4}
+    & & \multicolumn{1}{|r|}{Total Pay} & \pounds {{ "%.2f"|format(rate_per_hour * total_hours) }} & \\ \cline{3-4}
+    & & \multicolumn{2}{c|}{} \\ \cline{3-4}
+    & & \multicolumn{1}{|r|}{Cumulative Hours} & & \\ \cline{3-4}
+    & & \multicolumn{2}{c|}{} \\ \cline{3-4}
+    & & \multicolumn{1}{|r|}{Employee Signature} & & \\ \cline{3-4}
+    & & \multicolumn{2}{c|}{} \\ \cline{3-4}
+    & & \multicolumn{1}{|r|}{Manager Signature} & & \\ \cline{3-4}
+\end{longtabu}
+
+\end{document}
