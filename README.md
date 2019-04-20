@@ -9,8 +9,14 @@ Optionally it can generate time sheets from
 
 ## Dependencies
 
+Debian/Ubuntu:
 ```bash
 apt install texlive-latex-extra
+```
+
+Fedora:
+```bash
+dnf install texlive texlive-collection-latexextra
 ```
 
 ## Usage
